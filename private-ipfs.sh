@@ -7,9 +7,9 @@ BOOTSTRAP_LOG_FILE=./private-network/logs/bootstrap_logs.log
 # Remove the swarm.key file
 clean () {
 
-    echo "Cleaning files"
+    echo "Cleaning files..."
 
-    if [ -f ./private-network/.ipfs/swarm.key ]; then
+    if [ -f ./private-network/ipfs/swarm.key ]; then
         sudo rm ./private-network/ipfs/swarm.key
     fi
 
@@ -33,7 +33,7 @@ clean () {
 # Create missing directory
 volumeSetup () {
 
-    echo "Setting up directories"
+    echo "Setting up directories..."
 
     if [ ! -d private-network/ipfs/ ]; then
         mkdir private-network/ipfs/
@@ -48,7 +48,7 @@ volumeSetup () {
 # Start ipfs bootstrap node
 startBootstrap () {
 
-    echo "Setting up an ipfs bootstrap node"
+    echo "Setting up an ipfs bootstrap node..."
 
     stopContainers
 
@@ -65,7 +65,7 @@ startBootstrap () {
     docker-compose run -d --rm bootstrap_node > ipfs.bootstrap.container
 
     # Number of seconds to wait
-    echo "Waiting for 15 seconds ... ⏳"
+    echo "Waiting for 15 seconds for the bootstrap node to boot up..."
     sleep 15
     docker logs $(cat ./ipfs.bootstrap.container) | grep "PeerID" > peer-id-bootstrap-node
 }
