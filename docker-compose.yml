@@ -13,12 +13,6 @@ services:
     volumes:
       - ./private-network/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
-    ports:
-      - "4002:4001"
-      - "8083:8080"
-      - "5001:5001"
-    expose:
-      - 5001
 
   ipfs_node:
     hostname: ipfs_node

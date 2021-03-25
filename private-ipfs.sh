@@ -39,10 +39,6 @@ volumeSetup () {
     if [ ! -d private-network/ipfs/ ]; then
         mkdir private-network/ipfs/
     fi
-
-    if [ ! -d private-network/logs ]; then
-        mkdir private-network/logs
-    fi
     
 }
 
