@@ -9,8 +9,8 @@ clean () {
 
     echo "Cleaning files..."
 
-    if [ -f ./private-network/ipfs/swarm.key ]; then
-        sudo rm ./private-network/ipfs/swarm.key
+    if [ -d ./private-network/ipfs ]; then
+        sudo rm ./private-network/ipfs
     fi
 
     if [ -f ./ipfs.bootstrap.container ]; then
@@ -27,7 +27,8 @@ clean () {
 
     if [ -f ./peer-id-ipfs-node ]; then
         sudo rm ./peer-id-ipfs-node
-    fi  
+    fi
+      
 }
 
 # Create missing directory
