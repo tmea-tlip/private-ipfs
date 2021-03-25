@@ -59,12 +59,12 @@ startBootstrap () {
     chmod +x private-network/init.sh
 
     # Run the bootstrap ipfs node
-    docker-compose run -d --rm bootstrap_node > ipfs.bootstrap.container
+    docker-compose up -d bootstrap_node
 
     # Number of seconds to wait
-    echo "Waiting for 15 seconds for the bootstrap node to boot up..."
-    sleep 15
-    docker logs $(cat ./ipfs.bootstrap.container) | grep "PeerID" > peer-id-bootstrap-node
+    #echo "Waiting for 15 seconds for the bootstrap node to boot up..."
+    #sleep 15
+    #docker logs $(cat ./ipfs.bootstrap.container) | grep "PeerID" > peer-id-bootstrap-node
 }
 
 # Start ipfs node
