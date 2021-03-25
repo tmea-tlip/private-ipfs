@@ -94,7 +94,7 @@ swarmKey () {
     echo "Generating a swarm key..."
 
     # Generate a swarm key and output into a file 
-    docker run --rm golang:1.9 sh -c 'go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen && ipfs-swarm-key-gen' >> private-network/.ipfs/swarm.key
+    docker run --rm golang:1.9 sh -c 'go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen && ipfs-swarm-key-gen' >> private-network/ipfs/swarm.key
 }
 
 # Stop all containers
