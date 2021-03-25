@@ -51,6 +51,10 @@ startBootstrap () {
     # Run the bootstrap ipfs node
     docker-compose up -d bootstrap_node
 
+    # Number of seconds to wait
+    echo "Waiting for start up..."
+    sleep 15
+    
     echo "Saving the peer id for the bootstrap node"
     cat private-network/bootstrap_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 }
@@ -74,6 +78,9 @@ startIpfs () {
     docker-compose up -d ipfs_node
 
     # Number of seconds to wait
+    echo "Waiting for start up..."
+    sleep 15
+
     echo "Saving the peer id for the bootstrap node"
     cat private-network/ipfs_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 
