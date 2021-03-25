@@ -11,7 +11,7 @@ services:
       LIBP2P_FORCE_PNET: "1"
       SWARM_PEER:
     volumes:
-      - ./private-network/ipfs:/data/ipfs
+      - ./private-network/bootstrap_node/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
 
   ipfs_node:
@@ -23,5 +23,5 @@ services:
       LIBP2P_FORCE_PNET: "1"
       SWARM_PEER:
     volumes:
-      - ./private-network/ipfs:/data/ipfs
+      - ./private-network/ipfs_node/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
