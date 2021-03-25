@@ -6,8 +6,11 @@ BOOTSTRAP_LOG_FILE=./private-network/logs/bootstrap_logs.log
 
 # Remove the swarm.key file
 clean () {
+
+    echo "Cleaning files"
+
     if [ -f ./private-network/.ipfs/swarm.key ]; then
-        sudo rm ./private-network/.ipfs/swarm.key
+        sudo rm ./private-network/ipfs/swarm.key
     fi
 
     if [ -f ./ipfs.bootstrap.container ]; then
@@ -29,12 +32,23 @@ clean () {
 
 # Create missing directory
 volumeSetup () {
-    mkdir private-network/.ipfs/
-    mkdir private-network/logs
+
+    echo "Setting up directories"
+
+    if [ ! -d private-network/ipfs/ ]; then
+        mkdir private-network/ipfs/
+    fi
+
+    if [ ! -d private-network/logs ]; then
+        mkdir private-network/logs
+    fi
+    
 }
 
 # Start ipfs bootstrap node
 startBootstrap () {
+
+    echo "Setting up an ipfs bootstrap node"
 
     stopContainers
 
@@ -59,6 +73,8 @@ startBootstrap () {
 # Start ipfs node
 startIpfs () {
 
+    echo "Starting an ipfs node..."
+
     # init.sh executable
     chmod +x private-network/init.sh
 
@@ -66,7 +82,7 @@ startIpfs () {
     docker-compose run -d --rm ipfs_node > ipfs.node.container
 
     # Number of seconds to wait
-    echo "Waiting for 15 seconds ... ⏳"
+    echo "Waiting for 15 seconds for IPFS node to boot up..."
     sleep 15
     docker logs $(cat ./ipfs.node.container) | grep "PeerID" > peer-id-ipfs-node
 
@@ -74,6 +90,8 @@ startIpfs () {
 
 # Generate a swarm key
 swarmKey () {
+
+    echo "Generating a swarm key..."
 
     # Generate a swarm key and output into a file 
     docker run --rm golang:1.9 sh -c 'go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen && ipfs-swarm-key-gen' >> private-network/.ipfs/swarm.key
