@@ -9,17 +9,13 @@ clean () {
 
     echo "Cleaning files..."
 
-    if [ -d ./private-network/ipfs ]; then
-        sudo rm ./private-network/ipfs
+    if [ -d ./private-network/bootstrap_node ]; then
+        sudo rm ./private-network/bootstrap_node
     fi
 
-    if [ -f ./ipfs.bootstrap.container ]; then
-        sudo rm ./ipfs.bootstrap.container
-    fi   
-
-    if [ -f ./ipfs.node.container ]; then
-        sudo rm ./ipfs.node.container
-    fi  
+    if [ -d ./private-network/ipfs_node ]; then
+        sudo rm ./private-network/ipfs_node
+    fi
 
     if [ -f ./peer-id-bootstrap-node ]; then
         sudo rm ./peer-id-bootstrap-node
@@ -31,17 +27,6 @@ clean () {
       
 }
 
-# Create missing directory
-volumeSetup () {
-
-    echo "Setting up directories..."
-
-    if [ ! -d private-network/ipfs/ ]; then
-        mkdir private-network/ipfs/
-    fi
-    
-}
-
 # Start ipfs bootstrap node
 startBootstrap () {
 
@@ -51,7 +36,12 @@ startBootstrap () {
 
     clean
 
-    volumeSetup
+    echo "Setting up directories..."
+
+    if [ ! -d private-network/bootstrap_node/ ]; then
+        mkdir private-network/bootstrap_node/
+        mkdir private-network/bootstrap_node/ipfs
+    fi
 
     swarmKey
 
@@ -61,10 +51,8 @@ startBootstrap () {
     # Run the bootstrap ipfs node
     docker-compose up -d bootstrap_node
 
-    # Number of seconds to wait
-    #echo "Waiting for 15 seconds for the bootstrap node to boot up..."
-    #sleep 15
-    #docker logs $(cat ./ipfs.bootstrap.container) | grep "PeerID" > peer-id-bootstrap-node
+    echo "Saving the peer id for the bootstrap node"
+    cat private-network/bootstrap_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 }
 
 # Start ipfs node
@@ -72,16 +60,22 @@ startIpfs () {
 
     echo "Starting an ipfs node..."
 
+    echo "Setting up directories..."
+    
+    if [ ! -d private-network/ipfs_node/ ]; then
+        mkdir private-network/ipfs_node/
+        mkdir private-network/ipfs_node/ipfs
+    fi
+
     # init.sh executable
     chmod +x private-network/init.sh
 
     # Run the bootstrap ipfs node
-    docker-compose run -d --rm ipfs_node > ipfs.node.container
+    docker-compose up -d ipfs_node
 
     # Number of seconds to wait
-    echo "Waiting for 15 seconds for IPFS node to boot up..."
-    sleep 15
-    docker logs $(cat ./ipfs.node.container) | grep "PeerID" > peer-id-ipfs-node
+    echo "Saving the peer id for the bootstrap node"
+    cat private-network/ipfs_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 
 }
 
@@ -91,7 +85,7 @@ swarmKey () {
     echo "Generating a swarm key..."
 
     # Generate a swarm key and output into a file 
-    docker run --rm golang:1.9 sh -c 'go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen && ipfs-swarm-key-gen' >> private-network/ipfs/swarm.key
+    docker run --rm golang:1.9 sh -c 'go get github.com/Kubuxu/go-ipfs-swarm-key-gen/ipfs-swarm-key-gen && ipfs-swarm-key-gen' >> private-network/bootstrap_node/ipfs/swarm.key
 }
 
 # Stop all containers
