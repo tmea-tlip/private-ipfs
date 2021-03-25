@@ -11,8 +11,7 @@ services:
       LIBP2P_FORCE_PNET: "1"
       SWARM_PEER:
     volumes:
-      - bootstrap_node:/data/ipfs
-      - ./private-network/.ipfs/swarm.key:/data/ipfs/swarm.key
+      - ./private-network/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
     ports:
       - "4002:4001"
@@ -30,10 +29,5 @@ services:
       LIBP2P_FORCE_PNET: "1"
       SWARM_PEER:
     volumes:
-      - ipfs_node:/data/ipfs
-      - ./private-network/.ipfs/swarm.key:/data/ipfs/swarm.key
+      - ./private-network/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
-
-volumes:
-  bootstrap_node:
-  ipfs_node:
