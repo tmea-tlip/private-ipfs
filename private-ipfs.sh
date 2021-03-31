@@ -10,11 +10,11 @@ clean () {
     echo "Cleaning files..."
 
     if [ -d ./private-network/bootstrap_node ]; then
-        sudo rm ./private-network/bootstrap_node
+        sudo rm -rf ./private-network/bootstrap_node
     fi
 
     if [ -d ./private-network/ipfs_node ]; then
-        sudo rm ./private-network/ipfs_node
+        sudo rm -rf ./private-network/ipfs_node
     fi
 
     if [ -f ./peer-id-bootstrap-node ]; then
@@ -25,6 +25,17 @@ clean () {
         sudo rm ./peer-id-ipfs-node
     fi
       
+}
+
+# set up the dashboard
+dashboard (){
+
+    cd ~/private-ipfs/dashboard
+    curl -L https://github.com/ipfs/ipfs-webui/releases/download/v2.11.4/ipfs-webui.tar.gz > ipfs-webui.tar.gz
+    tar --extract --file ipfs-webui.tar.gz
+    rm ipfs-webui.tar.gz
+    docker-compose up -d dashboard
+
 }
 
 # Start ipfs bootstrap node
@@ -57,6 +68,9 @@ startBootstrap () {
     
     echo "Saving the peer id for the bootstrap node"
     cat private-network/bootstrap_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
+
+    # Start the dashboard
+    dashboard
 }
 
 # Start ipfs node
@@ -84,6 +98,8 @@ startIpfs () {
     echo "Saving the peer id for the bootstrap node"
     cat private-network/ipfs_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 
+    # Start the dashboard
+    dashboard
 }
 
 # Generate a swarm key

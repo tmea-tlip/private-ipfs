@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+echo "Logging"
+export IPFS_LOGGING=debug
+
 user=ipfs
 repo="$IPFS_PATH"
 

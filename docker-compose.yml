@@ -25,3 +25,9 @@ services:
     volumes:
       - ./private-network/ipfs_node/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs
+
+  dashboard:
+    hostname: dashboard
+    network_mode: host
+    build:
+      context: dashboard
