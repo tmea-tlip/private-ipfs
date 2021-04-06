@@ -1,3 +1,6 @@
 data_dir/**/*
 !data_dir/.placeholder
 !staging_dir/.placeholder
+dashboard/build/
+private-network/bootstrap_node/ipfs/
+peer-id-bootstrap-node
