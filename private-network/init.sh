@@ -33,6 +33,9 @@ else
   ipfs bootstrap rm --all
 fi
 
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["http://localhost:8080", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST"]'
+
 ipfs config show | grep "PeerID"
 
 if [ ! -z $SWARM_PEER ]; then ipfs bootstrap add $SWARM_PEER; fi
