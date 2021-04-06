@@ -60,7 +60,7 @@ startBootstrap () {
     chmod +x private-network/init.sh
 
     # Run the bootstrap ipfs node
-    docker-compose up -d bootstrap_node
+    docker-compose --log-level ERROR up -d bootstrap_node
 
     # Number of seconds to wait
     echo "Waiting for start up..."
@@ -89,7 +89,7 @@ startIpfs () {
     chmod +x private-network/init.sh
 
     # Run the bootstrap ipfs node
-    docker-compose up -d ipfs_node
+    docker-compose --log-level ERROR up -d ipfs_node
 
     # Number of seconds to wait
     echo "Waiting for start up..."
