@@ -4,3 +4,4 @@ data_dir/**/*
 dashboard/build/
 private-network/bootstrap_node/ipfs/
 peer-id-bootstrap-node
+build/

@@ -38,11 +38,11 @@ services:
       LIBP2P_FORCE_PNET: "1"
       SWARM_PEER:
     expose:
-      - 4001
-      - 5001
+      - 4002
+      - 5002
     ports:
-      - "4001:4001"
-      - "5001:5001"
+      - "4002:4001"
+      - "5002:5001"
     volumes:
       - ./private-network/ipfs_node/ipfs:/data/ipfs
       - ./private-network/init.sh:/usr/local/bin/start_ipfs

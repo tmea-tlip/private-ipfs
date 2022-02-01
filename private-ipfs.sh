@@ -30,7 +30,7 @@ clean () {
 # set up the dashboard
 dashboard (){
 
-    cd ~/private-ipfs/dashboard
+    cd dashboard
     curl -L https://github.com/ipfs/ipfs-webui/releases/download/v2.11.4/ipfs-webui.tar.gz > ipfs-webui.tar.gz
     tar --extract --file ipfs-webui.tar.gz
     rm ipfs-webui.tar.gz
@@ -54,6 +54,15 @@ startBootstrap () {
         mkdir private-network/bootstrap_node/ipfs
     fi
 
+    # The network is created to support the containers
+    docker network prune -f
+    
+    # Ensure the script does not stop if it has not been pruned
+    set +e
+    docker network create "private-ipfs"
+    set -e
+
+    # Generate swarm key
     swarmKey
 
     # init.sh executable
@@ -84,6 +93,11 @@ startIpfs () {
         mkdir private-network/ipfs_node/
         mkdir private-network/ipfs_node/ipfs
     fi
+
+    # Ensure the script does not stop if it has not been pruned
+    set +e
+    docker network create "private-ipfs"
+    set -e
 
     # init.sh executable
     chmod +x private-network/init.sh
