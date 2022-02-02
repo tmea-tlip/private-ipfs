@@ -78,8 +78,6 @@ startBootstrap () {
     echo "Saving the peer id for the bootstrap node"
     cat private-network/bootstrap_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 
-    # Start the dashboard
-    dashboard
 }
 
 # Start ipfs node
@@ -112,8 +110,6 @@ startIpfs () {
     echo "Saving the peer id for the bootstrap node"
     cat private-network/ipfs_node/ipfs/config | grep "PeerID" > peer-id-bootstrap-node
 
-    # Start the dashboard
-    dashboard
 }
 
 # Generate a swarm key
